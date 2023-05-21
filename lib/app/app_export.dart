@@ -1,0 +1,1 @@
+export 'bible_app.dart';
