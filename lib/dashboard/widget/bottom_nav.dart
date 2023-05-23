@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BibleBottomNavBar extends StatelessWidget {
   final int index;
@@ -21,8 +22,9 @@ class BibleBottomNavBar extends StatelessWidget {
       leftCornerRadius: 25,
       rightCornerRadius: 25,
       onTap: onTap,
-      itemCount: 5,
+      itemCount: 4,
       tabBuilder: (int index, bool isActive) {
+
         late IconData icon;
         late String iconTitle;
         switch (index) {
@@ -69,7 +71,13 @@ class BibleBottomNavBar extends StatelessWidget {
                       .unselectedItemColor,
               size: isActive ? 28 : 24,
             ),
-            Text(iconTitle)
+            Text(iconTitle,
+
+            style: GoogleFonts.poppins(
+              color: isActive ? null : Theme.of(context).textTheme.bodySmall!.color,
+              fontSize: isActive ? 15 : 12,
+            ),
+            )
           ],
         );
       },
