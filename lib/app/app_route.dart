@@ -1,6 +1,8 @@
 import 'package:bibleapp/app/app_export.dart';
+import 'package:bibleapp/dashboard/bloc/dashboard_bloc.dart';
 import 'package:bibleapp/dashboard/dashboard_export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouteNames {
   static const initialRoute = "/";
@@ -8,21 +10,25 @@ class AppRouteNames {
 }
 
 class AppRoute {
-  Route onGenerateRoute(RouteSettings routeSettings) {
-    late Widget widget;
 
+  DashBoardBloc dashBoardBloc =  DashBoardBloc();
+
+  Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case AppRouteNames.initialRoute:
-        widget = SplashScreen();
+        return MaterialPageRoute(builder: (_) => SplashScreen());
         break;
 
       case AppRouteNames.dashboard:
-        widget = DashboardScreen();
+        return MaterialPageRoute(builder: (_) => BlocProvider(create: (_)=>  dashBoardBloc, child:  DashboardScreen(),));
         break;
     }
 
-    return MaterialPageRoute(builder: (_) => widget);
+    return MaterialPageRoute(builder: (_) => Scaffold());
   }
 
-  void close() {}
+  void close() {
+
+    dashBoardBloc.close();
+  }
 }
