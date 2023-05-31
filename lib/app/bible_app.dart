@@ -1,4 +1,5 @@
 import 'package:bibleapp/app/app_export.dart';
+import 'package:bibleapp/themes/theme_light.dart';
 import 'package:flutter/material.dart';
 
 class BibleApp extends StatefulWidget {
@@ -23,6 +24,7 @@ class _BibleAppState extends State<BibleApp> {
       onGenerateRoute: appRoute.onGenerateRoute,
       initialRoute: AppRouteNames.initialRoute,
       debugShowCheckedModeBanner: false,
+      theme: BibleLightTheme.appLightTheme(),
     );
   }
 }

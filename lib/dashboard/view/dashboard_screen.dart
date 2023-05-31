@@ -1,3 +1,4 @@
+import 'package:bibleapp/books/view/books_view.dart';
 import 'package:bibleapp/dashboard/bloc/dashboard_bloc.dart';
 import 'package:bibleapp/dashboard/bloc/dashboard_event.dart';
 import 'package:bibleapp/dashboard/bloc/dashboard_state.dart';
@@ -97,9 +98,9 @@ class _DashboardViewState extends State<DashboardView> {
             },
             children: [
               HomeView(),
-              Container(
-                color: Colors.orange,
-              ),
+
+              BooksView(),
+
               Container(
                 color: Colors.green,
               ),
