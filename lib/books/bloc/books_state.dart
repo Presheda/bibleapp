@@ -24,4 +24,32 @@ class BooksStateLoadStatus extends BooksState {
   BooksStateLoadStatus.loadingFailed(
       {this.eventsStatus = BooksEventsStatus.loadingFailed,
       booksList = const []});
+
+  @override
+  List<Object?> get props => [booksList, eventsStatus];
+}
+
+
+enum BooksSearchStatus { searchStarted,  searchFinished,  searchFailed }
+
+class BooksStateSearching extends BooksState {
+  final List<BibleBooks> booksList = [];
+  final BooksSearchStatus searchStatus;
+
+  BooksStateSearching_() {}
+
+  BooksStateSearching.Searching(
+      {this.searchStatus = BooksSearchStatus.searchStarted,
+      booksList = const []});
+
+  BooksStateSearching.searchingFinished(
+      {this.searchStatus = BooksSearchStatus.searchFinished,
+      required booksList});
+
+  BooksStateSearching.searchingFailed(
+      {this.searchStatus = BooksSearchStatus.searchFailed,
+      booksList = const []});
+
+  @override
+  List<Object?> get props => [booksList, searchStatus];
 }
