@@ -30,6 +30,15 @@ abstract class ApiInterface {
     required T Function(ResponseModel<JSON> response) converter,
   });
 
+  Future<T> updateData<T>({
+    required String endpoint,
+    required JSON data,
+    CancelToken? cancelToken,
+    bool requiresAuthToken = true,
+    required T Function(ResponseModel<JSON> response) converter,
+  });
+
+
   Future<T> deleteData<T>({
     required String endpoint,
     JSON? data,
