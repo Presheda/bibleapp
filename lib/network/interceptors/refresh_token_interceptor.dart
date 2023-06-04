@@ -62,7 +62,7 @@ class RefreshTokenInterceptor extends Interceptor {
       debugPrint('');
 
       final response = await tokenDio.post<JSON>(
-        ApiEndpoint.auth(AuthEndpoint.REFRESH_TOKEN),
+        ApiEndpoint.books(BooksEndpoint.BOOKS),
         data: data,
       );
 

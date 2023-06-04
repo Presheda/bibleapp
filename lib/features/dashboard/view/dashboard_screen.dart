@@ -1,4 +1,5 @@
-
+import 'package:bibleapp/features/books/bloc/books_bloc.dart';
+import 'package:bibleapp/features/books/bloc/books_state.dart';
 import 'package:bibleapp/features/books/view/books_view.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_bloc.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_event.dart';
@@ -31,13 +32,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               currentState.currentIndex != index,
           builder: (context, state) {
             print("ButtomBar is being built $index");
-           index = (state as DashBoardStateCurrentIndexChanged).currentIndex;
+            index = (state as DashBoardStateCurrentIndexChanged).currentIndex;
             return BibleBottomNavBar(
                 index:
                     (state as DashBoardStateCurrentIndexChanged).currentIndex,
                 onTap: (index) {
-
-
                   context
                       .read<DashBoardBloc>()
                       .add(DashboardEventIndexChanged(currentIndex: index));
@@ -76,7 +75,6 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<DashBoardBloc, DashBoardState>(
         listener: (previousState, currentState) {
           if (currentState is DashBoardStateCurrentIndexChanged &&
@@ -89,7 +87,6 @@ class _DashboardViewState extends State<DashboardView> {
         buildWhen: (previousState, currentState) =>
             currentState is! DashBoardStateCurrentIndexChanged,
         builder: (context, state) {
-
           return PageView(
             controller: controller,
             onPageChanged: (int index) {
@@ -98,10 +95,11 @@ class _DashboardViewState extends State<DashboardView> {
                   .add(DashboardEventIndexChanged(currentIndex: index));
             },
             children: [
-              HomeView(),
-
-              BooksView(),
-
+              const HomeView(),
+              BlocProvider<BibleBooksBloc>(
+                create: (context) => BibleBooksBloc(),
+                child: const BooksView(),
+              ),
               Container(
                 color: Colors.green,
               ),

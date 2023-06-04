@@ -18,5 +18,5 @@ class BibleBooks with _$BibleBooks {
     required int chapters,
   }) = _BibleBooks;
 
-  factory BibleBooks.fromJson(Map<String, Object> json) => _$BibleBooksFromJson(json);
+  factory BibleBooks.fromJson(Map<String, dynamic> json) => _$BibleBooksFromJson(json);
 }

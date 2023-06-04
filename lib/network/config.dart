@@ -18,7 +18,7 @@ class Config {
   /// ```
   static const baseUrl = String.fromEnvironment(
     'BASE_URL',
-    defaultValue: 'localhost:3000/api/v1',
+    defaultValue: 'https://www.abibliadigital.com.br/api',
   );
 
 
