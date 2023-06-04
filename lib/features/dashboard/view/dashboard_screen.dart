@@ -1,4 +1,5 @@
-import 'package:bibleapp/books/view/books_view.dart';
+
+import 'package:bibleapp/features/books/view/books_view.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_bloc.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_event.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_state.dart';

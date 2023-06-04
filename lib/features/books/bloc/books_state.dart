@@ -1,5 +1,6 @@
-import 'package:bibleapp/books/bloc/books_event.dart';
-import 'package:bibleapp/books/model/bible_books.dart';
+
+import 'package:bibleapp/features/books/bloc/books_event.dart';
+import 'package:bibleapp/features/books/model/bible_books.dart';
 import 'package:equatable/equatable.dart';
 
 class BooksState extends Equatable {

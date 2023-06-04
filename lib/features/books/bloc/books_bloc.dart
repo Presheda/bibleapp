@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bibleapp/books/bloc/books_event.dart';
-import 'package:bibleapp/books/bloc/books_state.dart';
+import 'package:bibleapp/features/books/bloc/books_event.dart';
+import 'package:bibleapp/features/books/bloc/books_state.dart';
 import 'package:bloc/bloc.dart';
 
 class BibleBooksBloc extends Bloc<BooksEvents, BooksState> {

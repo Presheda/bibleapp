@@ -1,5 +1,6 @@
-import 'package:bibleapp/books/model/bible_abbrev.dart';
 
+
+import 'package:bibleapp/features/books/model/bible_abbrev.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
