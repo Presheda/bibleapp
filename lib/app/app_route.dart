@@ -1,6 +1,6 @@
 import 'package:bibleapp/app/app_export.dart';
-import 'package:bibleapp/dashboard/bloc/dashboard_bloc.dart';
-import 'package:bibleapp/dashboard/dashboard_export.dart';
+import 'package:bibleapp/features/dashboard/bloc/dashboard_bloc.dart';
+import 'package:bibleapp/features/dashboard/view/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
