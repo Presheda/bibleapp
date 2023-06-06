@@ -5,6 +5,7 @@ import 'package:bibleapp/network/response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/src/cancel_token.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:flutter/material.dart';
 
 import 'dio_service.dart';
 
@@ -25,7 +26,7 @@ class ApiService implements ApiInterface {
     List<Object?> body;
 
     try {
-      final data = await _dioService.get<List<Object?>>(
+      final data = await _dioService.get(
           endpoint: endpoint,
           cacheOptions: _dioService.globalCacheOptions?.copyWith(
               policy: cachePolicy,
@@ -38,8 +39,9 @@ class ApiService implements ApiInterface {
           queryParams: queryParams,
           cancelToken: cancelToken);
 
-      body = data.body;
+      body = data.data;
     } on Exception catch (ex) {
+      debugPrint("data here is $ex");
       throw CustomException.fromDioException(ex);
     }
 
@@ -75,7 +77,7 @@ class ApiService implements ApiInterface {
           options: Options(extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken
           }));
-      body = response.body;
+      body = response.data;
     } on Exception catch (ex) {
       throw CustomException.fromDioException(ex);
     }

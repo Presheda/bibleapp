@@ -26,7 +26,7 @@ class ApiInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // TODO this depends on the APi and it's formate of how errors are returned
-    final success = response.data['header']['error'] == 0;
+    final success = response.statusCode == 200;
 
     if (success) return handler.next(response);
 

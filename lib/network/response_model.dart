@@ -4,14 +4,14 @@ import 'package:bibleapp/helpers/typedefs.dart';
 
 class ResponseModel<T> {
   final _ResponseModelHeadersModel headers;
-  final T body;
+  final T data;
 
-  const ResponseModel({required this.headers, required this.body});
+  const ResponseModel({required this.headers, required this.data});
 
   factory ResponseModel.fromJson(JSON json) {
     return ResponseModel(
         headers: _ResponseModelHeadersModel.fromJson(json['headers'] as JSON),
-        body: json['body'] as T);
+        data: json['data'] as T);
   }
 }
 

@@ -8,21 +8,21 @@ class BooksState extends Equatable {
   List<Object?> get props => [];
 }
 
-class BooksStateLoadStatus extends BooksState {
+class BooksStateLoad extends BooksState {
   final List<BibleBooks> booksList = [];
   final BooksEventsStatus eventsStatus;
 
-  BooksStateLoadStatus_() {}
+  BooksStateLoad_() {}
 
-  BooksStateLoadStatus.Loading(
+  BooksStateLoad.Loading(
       {this.eventsStatus = BooksEventsStatus.loadingStarted,
       booksList = const []});
 
-  BooksStateLoadStatus.loadingFinished(
+  BooksStateLoad.loadingFinished(
       {this.eventsStatus = BooksEventsStatus.loadingFinished,
       required booksList});
 
-  BooksStateLoadStatus.loadingFailed(
+  BooksStateLoad.loadingFailed(
       {this.eventsStatus = BooksEventsStatus.loadingFailed,
       booksList = const []});
 

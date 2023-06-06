@@ -23,6 +23,8 @@ class CustomException implements Exception {
   final int? statusCode;
   final _ExceptionType exceptionType;
 
+
+
   CustomException(
       {required this.message,
       this.code,
@@ -131,4 +133,7 @@ class CustomException implements Exception {
         message: "Unable to parse data",
         exceptionType: _ExceptionType.SerializationException);
   }
+
+  @override
+  String toString() => "Name : $name, message : $message, statusCode : $statusCode";
 }

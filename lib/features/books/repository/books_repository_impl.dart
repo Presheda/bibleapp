@@ -18,6 +18,7 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
 
     books = await apiService.getCollectionData(
         endpoint: ApiEndpoint.books(BooksEndpoint.BOOKS),
+        requiresAuthToken: false,
         converter: BibleBooks.fromJson);
     return books;
   }
@@ -28,6 +29,7 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
 
     books = await apiService.getDocumentData(
         endpoint: ApiEndpoint.books(BooksEndpoint.BOOKS),
+        requiresAuthToken: false,
         converter: BibleBooks.fromJson);
     return books;
   }

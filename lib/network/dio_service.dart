@@ -1,6 +1,11 @@
+import 'dart:async' ;
+
+import 'dart:core';
+
 import 'package:bibleapp/helpers/typedefs.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:flutter/material.dart';
 
 import 'response_model.dart';
 
@@ -30,35 +35,35 @@ class DioService {
     }
   }
 
-  Future<ResponseModel<R>> get<R>({
+  Future<dynamic> get({
     required String endpoint,
     JSON? queryParams,
     Options? options,
     CacheOptions? cacheOptions,
     CancelToken? cancelToken,
   }) async {
-    final response = await _dio.get<JSON>(endpoint,
+    final response = await _dio.get<dynamic>(endpoint,
         queryParameters: queryParams,
         options: _mergeDioAndCacheOptions(
             dioOptions: options, cacheOptions: cacheOptions),
         cancelToken: cancelToken ?? _cancelToken);
 
-    return ResponseModel<R>.fromJson(response.data!);
+    return response;
   }
 
-  Future<ResponseModel<R>> post<R>({
+  Future<dynamic> post({
     required String endpoint,
     JSON? data,
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    final response = await _dio.post<JSON>(endpoint,
+    final response = await _dio.post<dynamic>(endpoint,
         data: data, cancelToken: cancelToken ?? _cancelToken, options: options);
 
-    return ResponseModel<R>.fromJson(response.data!);
+    return response;
   }
 
-  Future<ResponseModel<R>> patch<R>({
+  Future<dynamic> patch<R>({
     required String endpoint,
     JSON? data,
     Options? options,
@@ -67,10 +72,10 @@ class DioService {
     final response = await _dio.patch(endpoint,
         data: data, options: options, cancelToken: cancelToken ?? _cancelToken);
 
-    return ResponseModel<R>.fromJson(response.data!);
+    return response;
   }
 
-  Future<ResponseModel<R>> delete<R>(
+  Future<dynamic> delete<R>(
       {required String endpoint,
       JSON? data,
       Options? options,
@@ -78,7 +83,7 @@ class DioService {
     final response = await _dio.delete(endpoint,
         options: options, cancelToken: cancelToken ?? _cancelToken);
 
-    return ResponseModel<R>.fromJson(response.data!);
+    return response;
   }
 
   Options? _mergeDioAndCacheOptions({
