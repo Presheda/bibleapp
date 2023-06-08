@@ -1,14 +1,15 @@
-enum BooksEventsStatus { loadingStarted, loadingFinished, loadingFailed }
+//enum BooksEventsStatus { loadingStarted, loadingFinished, loadingFailed }
 
-sealed class BooksEvents {}
+ class BooksEvents {}
 
-sealed class BooksEventsLoading extends BooksEvents{
-  final BooksEventsStatus eventsStatus;
+ class BooksEventsBookLoading extends BooksEvents{
+ // final BooksEventsStatus eventsStatus;
 
-  BooksEventsLoading({required this.eventsStatus});
+ // BooksEventsLoading({required this.eventsStatus});
+  BooksEventsBookLoading();
 }
 
-sealed class BooksEventsSearching extends BooksEvents{
+ class BooksEventsBookSearching extends BooksEvents{
   String text;
-  BooksEventsSearching({required this.text});
+  BooksEventsBookSearching({required this.text});
 }
