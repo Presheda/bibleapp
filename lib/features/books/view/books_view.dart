@@ -37,8 +37,58 @@ class BooksView extends StatelessWidget {
               const AppSpacing(
                 height: 30,
               ),
-              CustomTextField(
-                controller: TextEditingController(),
+              Autocomplete<String>(
+                fieldViewBuilder: (context, controller, focusNode, onSubmit) {
+                  return CustomTextField(
+                    controller: controller,
+                    hint: "Search books, chapters, verses",
+                    focus: focusNode,
+                  );
+                },
+                optionsViewBuilder: (
+                  c,
+                  onSelected,
+                  options,
+                ) {
+                  return Align(
+                    alignment: Alignment.topLeft,
+                    widthFactor: .9,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.sizeOf(context).shortestSide - 20,
+                        maxHeight: 200,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color
+                          borderRadius:
+                              BorderRadius.circular(8), // Apply border radius
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.3), // Add a box shadow
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: ListView.builder(
+                            itemBuilder: (c, index) {
+                              return CustomText(
+                                title: options.toList()[index],
+                              );
+                            },
+                            itemCount: options.length),
+                      ),
+                    ),
+                  );
+                },
+                optionsBuilder: (e) {
+                  return <String>["People", "Others", "Names", "Edafe"]
+                      .where((element) => element.contains(e.text))
+                      .toList();
+                },
               ),
               const AppSpacing(
                 height: 30,

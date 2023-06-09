@@ -52,45 +52,46 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscure ?? false,
       validator: validator,
       style: GoogleFonts.poppins(
-         // Theme.of(context).textTheme.headline6.color,
+         color:  Theme.of(context).textTheme.bodySmall!.color,
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: GoogleFonts.poppins(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-
+        hintStyle:  GoogleFonts.poppins(
+          color:  Theme.of(context).textTheme.bodySmall!.color,
+          fontSize: 14,
+          fontWeight: FontWeight.w300,
         ),
-        counter: SizedBox.shrink(),
-        contentPadding: EdgeInsets.symmetric(
+        counter: const SizedBox.shrink(),
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 20,
         ),
         filled: true,
 
+
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.transparent)),
+            borderSide: const BorderSide(color: Colors.transparent)),
         focusedBorder: UnderlineInputBorder(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topRight: Radius.circular(10),
               topLeft: Radius.circular(10),
             ),
             borderSide: BorderSide(color: Theme.of(context).primaryColor)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.transparent)),
+            borderSide: const BorderSide(color: Colors.transparent)),
         errorBorder: UnderlineInputBorder(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topRight: Radius.circular(10),
               topLeft: Radius.circular(10),
             ),
             borderSide: BorderSide(color: Theme.of(context).errorColor)),
 
         focusedErrorBorder: UnderlineInputBorder(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topRight: Radius.circular(10),
               topLeft: Radius.circular(10),
             ),

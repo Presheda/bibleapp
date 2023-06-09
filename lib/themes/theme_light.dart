@@ -30,32 +30,33 @@ class BibleLightTheme {
 
   static ThemeData appLightTheme() {
     return ThemeData.light().copyWith(
-        primaryTextTheme: TextTheme(
-          bodyText1: TextStyle(color: primaryColorLight),
-          headline6: TextStyle(
+        primaryTextTheme: const TextTheme(
+          bodyLarge: TextStyle(color: primaryColorLight),
+          titleLarge: TextStyle(
             color: headerTextColor,
           ),
-          headline2: TextStyle(
+          displayMedium: TextStyle(
             color: headLine2Color,
           ),
-          headline3: TextStyle(
+          displaySmall: TextStyle(
             color: headLine3Color,
           ),
         ),
-        bottomSheetTheme: BottomSheetThemeData(
+        bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: greyBackgroundColor,
         ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: primaryColorLight,
         ),
-        dividerTheme: DividerThemeData(),
+        dividerTheme: const DividerThemeData(),
         dialogTheme:
-            DialogTheme(contentTextStyle: TextStyle(color: textColorDark)),
+            const DialogTheme(contentTextStyle: TextStyle(color: textColorDark)),
         primaryColor: primaryColorLight,
         scaffoldBackgroundColor: backgroundColor,
         errorColor: errorColor,
         backgroundColor: greyBackgroundColor,
-        colorScheme: ColorScheme(
+
+        colorScheme: const ColorScheme(
             brightness: Brightness.light,
             primary: primaryColorLight,
             onPrimary: primaryColorLight,
@@ -68,16 +69,17 @@ class BibleLightTheme {
             surface: greyBackgroundColor,
             onSurface: greyBackgroundColor),
         textTheme: TextTheme(
-          bodyText1: GoogleFonts.poppins(color: textColorDark),
-          bodyText2: GoogleFonts.poppins(color: textColorDark),
-          headline2: TextStyle(
+          bodyLarge: GoogleFonts.poppins(color: textColorDark),
+          bodyMedium: GoogleFonts.poppins(color: textColorDark),
+          bodySmall: GoogleFonts.poppins(color: textColorDark),
+          displayMedium: const TextStyle(
             color: headLine2Color,
           ),
-          headline3: TextStyle(
+          displaySmall: const TextStyle(
             color: headLine3Color,
           ),
-          headline5: TextStyle(color: headerTextColor),
-          headline6: TextStyle(
+          headlineSmall: const TextStyle(color: headerTextColor),
+          titleLarge: const TextStyle(
               fontFamily: "ITCAVANT",
               fontWeight: FontWeight.w700,
               color: headerTextColor,
@@ -85,9 +87,9 @@ class BibleLightTheme {
         ),
         primaryColorLight: textColorLight,
         primaryColorDark: textColorDark,
-        tabBarTheme: TabBarTheme(labelStyle: TextStyle(color: textColorDark)),
-        iconTheme: IconThemeData(color: Colors.black),
-        appBarTheme: AppBarTheme(
+        tabBarTheme: const TabBarTheme(labelStyle: TextStyle(color: textColorDark)),
+        iconTheme: const IconThemeData(color: Colors.black),
+        appBarTheme: const AppBarTheme(
           elevation: 0,
       //    brightness: Brightness.light,
           color: Colors.white,
@@ -103,12 +105,12 @@ class BibleLightTheme {
           iconTheme: IconThemeData(color: Color(0xffBFBFBF)),
           actionsIconTheme: IconThemeData(color: Color(0xffBFBFBF)),
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.white,
             selectedItemColor: primaryColorLight,
             unselectedItemColor: Color(0xffE7E4E4)),
-        disabledColor: Color(0xffA1A1A1),
-        inputDecorationTheme: InputDecorationTheme(
+        disabledColor: const Color(0xffA1A1A1),
+        inputDecorationTheme: const InputDecorationTheme(
             fillColor: textFieldFilledColor,
             labelStyle: TextStyle(fontSize: 14, color: textFieldLabelColor)));
   }
