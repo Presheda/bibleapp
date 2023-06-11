@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bibleapp/features/books/bloc/books_event.dart';
-import 'package:bibleapp/features/books/model/bible_books.dart';
+import 'package:bibleapp/features/books/model/book_data.dart';
 import 'package:bibleapp/features/books/repository/books_repository_impl.dart';
 import 'package:bibleapp/features/books/repository/books_repository_interface.dart';
 import 'package:bibleapp/network/custom_exception.dart';
@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 
 import 'bible_book_state.dart';
 
-class BibleBooksBloc extends Bloc<BooksEvents, BibleBlocState> {
+class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
   BooksRepositoryInterface booksRepository;
 
-  List<BibleBooks> oldTestament = [];
+  List<BookData> oldTestament = [];
 
-  List<BibleBooks> newTestament = [];
+  List<BookData> newTestament = [];
 
-  BibleBooksBloc({BooksRepositoryInterface? booksRepositoryImpl})
+  BookDataBloc({BooksRepositoryInterface? booksRepositoryImpl})
       : booksRepository = booksRepositoryImpl ?? BooksRepositoryImpl(),
         super(BibleBlocState()) {
     on<BooksEventsBookLoading>(_booksLoadingInitiated);
@@ -29,17 +29,18 @@ class BibleBooksBloc extends Bloc<BooksEvents, BibleBlocState> {
 
   FutureOr<void> _booksLoadingInitiated(
       BooksEventsBookLoading event, Emitter<BibleBlocState> emit) async {
-    List<BibleBooks> books;
+    List<BookData> books;
     try {
       books = await booksRepository.fetchAllBooks();
 
-      oldTestament.addAll(books.where((element) => element.testament == "VT"));
-      newTestament.addAll(books.where((element) => element.testament == "NT"));
+      // oldTestament.addAll(books.where((element) => element.testament == "VT"));
+      // newTestament.addAll(books.where((element) => element.testament == "NT"));
 
       emit(state.copyWith(
-          oldTestament: oldTestament,
-          newTestament: newTestament,
+          oldTestament: [],
+          newTestament:[],
           loadStatus: BibleStateLoadStatus.loadSuccess,
+          booksList: books,
           bibleState: BibleState.bookLoad));
     } catch (e) {
       emit(state.copyWith(

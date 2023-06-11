@@ -21,7 +21,7 @@ class BooksView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocBuilder<BibleBooksBloc, BibleBlocState>(
+    return BlocBuilder<BookDataBloc, BibleBlocState>(
         builder: (context, state) {
       return CustomScrollView(
         slivers: [
@@ -52,8 +52,8 @@ class BooksView extends StatelessWidget {
                   onSelected,
                   options,
                 ) {
-                  return BlocProvider<BibleBooksBloc>.value(
-                    value:  BlocProvider.of<BibleBooksBloc>(context),
+                  return BlocProvider<BookDataBloc>.value(
+                    value:  BlocProvider.of<BookDataBloc>(context),
                     child: Align(
                       alignment: Alignment.topLeft,
                       widthFactor: .9,
@@ -141,7 +141,7 @@ class BooksView extends StatelessWidget {
               ),
             ]))),
           ),
-          BlocBuilder<BibleBooksBloc, BibleBlocState>(
+          BlocBuilder<BookDataBloc, BibleBlocState>(
               buildWhen: (state, current) =>
                   current.bibleState == BibleState.bookLoad,
               builder: (context, state) {
@@ -151,8 +151,8 @@ class BooksView extends StatelessWidget {
                     sliver: SliverGrid(
                         delegate: SliverChildBuilderDelegate((c, index) {
                           return BibleBookWidget(
-                              books: state.newTestament[index]);
-                        }, childCount: state.newTestament.length),
+                              books: state.booksList[index]);
+                        }, childCount: state.booksList.length),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
@@ -215,7 +215,7 @@ class BooksView extends StatelessWidget {
               ),
             ]))),
           ),
-          BlocBuilder<BibleBooksBloc, BibleBlocState>(
+          BlocBuilder<BookDataBloc, BibleBlocState>(
               buildWhen: (state, current) =>
                   current.bibleState == BibleState.bookLoad,
               builder: (context, state) {
@@ -225,8 +225,8 @@ class BooksView extends StatelessWidget {
                     sliver: SliverGrid(
                         delegate: SliverChildBuilderDelegate((c, index) {
                           return BibleBookWidget(
-                              books: state.oldTestament[index]);
-                        }, childCount: state.oldTestament.length),
+                              books: state.booksList[index]);
+                        }, childCount: state.booksList.length),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,

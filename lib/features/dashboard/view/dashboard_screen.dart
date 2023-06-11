@@ -1,3 +1,4 @@
+
 import 'package:bibleapp/features/books/bloc/books_bloc.dart';
 import 'package:bibleapp/features/books/view/books_view.dart';
 import 'package:bibleapp/features/dashboard/bloc/dashboard_bloc.dart';
@@ -95,8 +96,8 @@ class _DashboardViewState extends State<DashboardView> {
             },
             children: [
               const HomeView(),
-              BlocProvider<BibleBooksBloc>(
-                create: (context) => BibleBooksBloc(),
+              BlocProvider<BookDataBloc>(
+                create: (context) => BookDataBloc(),
                 child: const BooksView(),
               ),
               Container(

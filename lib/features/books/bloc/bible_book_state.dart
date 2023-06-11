@@ -1,8 +1,9 @@
-import 'package:bibleapp/features/books/model/bible_books.dart';
+
+import 'package:bibleapp/features/books/model/export_model.dart';
 import 'package:equatable/equatable.dart';
 
 /// currently there are only two states we want to listen to for our bible state
-/// [bookLoad] when bookview is loaded and biblebooks are being loaded
+/// [bookLoad] when bookview is loaded and BookData are being loaded
 /// [search] when the user starts searching for a book;
 ///
 /// this enum helps us to know what state to respond to
@@ -21,13 +22,13 @@ class BibleBlocState extends Equatable {
   final BibleStateLoadStatus loadStatus;
 
   /// the booksLoaded, used for search
-  final List<BibleBooks> booksList;
+  final List<BookData> booksList;
 
   /// used for normal initial load, we already do the filter in the bloc
-  final List<BibleBooks> oldTestament;
+  final List<BookData> oldTestament;
 
   /// used for normal initial load, we already do the filter in the bloc
-  final List<BibleBooks> newTestament;
+  final List<BookData> newTestament;
 
   /// when searching, int he auto-complete modal there's a togglebutton to switch from verse to chapter and vise-versa
   final bool verse;
@@ -36,9 +37,9 @@ class BibleBlocState extends Equatable {
   BibleBlocState(
       {BibleState? bibleState,
       BibleStateLoadStatus? loadStatus,
-      List<BibleBooks>? booksList,
-      List<BibleBooks>? oldTestament,
-      List<BibleBooks>? newTestament,
+      List<BookData>? booksList,
+      List<BookData>? oldTestament,
+      List<BookData>? newTestament,
       this.verse = true,
       this.chapter = false})
       : bibleState = bibleState ?? BibleState.bookLoad,
@@ -77,9 +78,9 @@ class BibleBlocState extends Equatable {
   BibleBlocState copyWith(
       {BibleState? bibleState,
       BibleStateLoadStatus? loadStatus,
-      List<BibleBooks>? booksList,
-      List<BibleBooks>? oldTestament,
-      List<BibleBooks>? newTestament,
+      List<BookData>? booksList,
+      List<BookData>? oldTestament,
+      List<BookData>? newTestament,
       bool? verse,
       bool? chapter}) {
     return BibleBlocState(

@@ -1,15 +1,14 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bibleapp/app/constants/app_constants.dart';
-import 'package:bibleapp/features/books/model/bible_books.dart';
+import 'package:bibleapp/features/books/model/export_model.dart';
 import 'package:bibleapp/helpers/assets_constant.dart';
 import 'package:bibleapp/widgets/widget_export.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BibleBookWidget extends StatelessWidget {
-  final BibleBooks books;
+  final BookData books;
 
   BibleBookWidget({required this.books});
 

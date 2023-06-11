@@ -14,7 +14,7 @@ class ToggleSearchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BibleBooksBloc, BibleBlocState>(
+    return BlocBuilder<BookDataBloc, BibleBlocState>(
 
         builder: (context, state) {
           return ToggleButtons(
@@ -34,13 +34,13 @@ class ToggleSearchButton extends StatelessWidget {
               debugPrint("Toggled at $index");
 
               if (index == 0) {
-                context.read<BibleBooksBloc>().add(BooksEventsBookSearchingVerseToggled(
+                context.read<BookDataBloc>().add(BooksEventsBookSearchingVerseToggled(
                     verse : true,
                     chapter : false
                 ));
               } else {
 
-                context.read<BibleBooksBloc>().add(BooksEventsBookSearchingVerseToggled(
+                context.read<BookDataBloc>().add(BooksEventsBookSearchingVerseToggled(
                     verse : false,
                     chapter : true
                 ));

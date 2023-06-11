@@ -6,13 +6,14 @@ class ApiEndpoint {
   static const baseUrl = Config.baseUrl;
 
   /// Returns the path for an authentication [endpoint].
-  static String books(BooksEndpoint endpoint, {String? abbrev}) {
+  static String books(BooksEndpoint endpoint,
+      {String? bibleId, String? chapterId}) {
     const path = '';
     switch (endpoint) {
       case BooksEndpoint.BOOKS:
-        return '$path/books';
+        return '$path/$bibleId/books';
       case BooksEndpoint.SINGLE_BOOK:
-        return '$path/books/$abbrev';
+        return '$path/$bibleId/books/${chapterId!.toUpperCase()}/chapters';
     }
   }
 }
