@@ -29,55 +29,69 @@ class BibleBlocState extends Equatable {
   /// used for normal initial load, we already do the filter in the bloc
   final List<BibleBooks> newTestament;
 
-  BibleBlocState({
-    BibleState? bibleState,
-    BibleStateLoadStatus? loadStatus,
-    List<BibleBooks>? booksList,
-    List<BibleBooks>? oldTestament,
-    List<BibleBooks>? newTestament,
-  })  : bibleState = bibleState ?? BibleState.bookLoad,
+  /// when searching, int he auto-complete modal there's a togglebutton to switch from verse to chapter and vise-versa
+  final bool verse;
+  final bool chapter;
+
+  BibleBlocState(
+      {BibleState? bibleState,
+      BibleStateLoadStatus? loadStatus,
+      List<BibleBooks>? booksList,
+      List<BibleBooks>? oldTestament,
+      List<BibleBooks>? newTestament,
+      this.verse = true,
+      this.chapter = false})
+      : bibleState = bibleState ?? BibleState.bookLoad,
         loadStatus = loadStatus ?? BibleStateLoadStatus.loadingStarted,
         booksList = booksList ?? [],
         oldTestament = oldTestament ?? [],
         newTestament = newTestament ?? [];
 
- const BibleBlocState.loadSuccess({
-    required this.bibleState,
-    required this.booksList,
-    required this.oldTestament,
-    required this.newTestament,
-  }) : loadStatus = BibleStateLoadStatus.loadSuccess;
+  const BibleBlocState.loadSuccess(
+      {required this.bibleState,
+      required this.booksList,
+      required this.oldTestament,
+      required this.newTestament,
+      this.verse = true,
+      this.chapter = false})
+      : loadStatus = BibleStateLoadStatus.loadSuccess;
 
- const BibleBlocState.loadFailed({
-    required this.bibleState,
-    required this.booksList,
-    required this.oldTestament,
-    required this.newTestament,
-  }) : loadStatus = BibleStateLoadStatus.loadFailed;
+  const BibleBlocState.loadFailed(
+      {required this.bibleState,
+      required this.booksList,
+      required this.oldTestament,
+      required this.newTestament,
+      this.verse = true,
+      this.chapter = false})
+      : loadStatus = BibleStateLoadStatus.loadFailed;
 
- const BibleBlocState.loadingStarted({
-    required this.bibleState,
-    required this.booksList,
-    required this.oldTestament,
-    required this.newTestament,
-  }) : loadStatus = BibleStateLoadStatus.loadingStarted;
+  const BibleBlocState.loadingStarted(
+      {required this.bibleState,
+      required this.booksList,
+      required this.oldTestament,
+      required this.newTestament,
+      this.verse = true,
+      this.chapter = false})
+      : loadStatus = BibleStateLoadStatus.loadingStarted;
 
-  BibleBlocState copyWith({
-    BibleState? bibleState,
-    BibleStateLoadStatus? loadStatus,
-    List<BibleBooks>? booksList,
-    List<BibleBooks>? oldTestament,
-    List<BibleBooks>? newTestament,
-  }) {
+  BibleBlocState copyWith(
+      {BibleState? bibleState,
+      BibleStateLoadStatus? loadStatus,
+      List<BibleBooks>? booksList,
+      List<BibleBooks>? oldTestament,
+      List<BibleBooks>? newTestament,
+      bool? verse,
+      bool? chapter}) {
     return BibleBlocState(
-      bibleState: bibleState ?? this.bibleState,
-      loadStatus: loadStatus ?? this.loadStatus,
-      booksList: booksList ?? this.booksList,
-      oldTestament: oldTestament ?? this.oldTestament,
-      newTestament: newTestament ?? this.newTestament,
-    );
+        bibleState: bibleState ?? this.bibleState,
+        loadStatus: loadStatus ?? this.loadStatus,
+        booksList: booksList ?? this.booksList,
+        oldTestament: oldTestament ?? this.oldTestament,
+        newTestament: newTestament ?? this.newTestament,
+        verse: verse ?? this.verse,
+        chapter: chapter ?? this.chapter);
   }
 
   List<Object?> get props =>
-      [bibleState, loadStatus, booksList, oldTestament, newTestament];
+      [bibleState, loadStatus, booksList, oldTestament, newTestament, verse, chapter];
 }

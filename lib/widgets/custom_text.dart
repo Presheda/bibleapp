@@ -39,7 +39,9 @@ class CustomText extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       textAlign: textAlign,
 
+
       style: GoogleFonts.poppins(
+        decoration: decoration ?? TextDecoration.none,
           letterSpacing: letterSpacing,
           fontSize: fontSize ?? 10,
           fontWeight: fontWeight,

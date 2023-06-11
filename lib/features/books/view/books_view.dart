@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:bibleapp/app/constants/export_app_constants.dart';
 import 'package:bibleapp/features/books/bloc/bible_book_state.dart';
 import 'package:bibleapp/features/books/widget/bible_book_widget.dart';
+import 'package:bibleapp/features/books/widget/book_sub_widget.dart';
+import 'package:bibleapp/features/books/widget/books_search_result.dart';
+import 'package:bibleapp/features/books/widget/toggle_search.dart';
 
 import 'package:bibleapp/widgets/widget_export.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +20,6 @@ class BooksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("BooksView being built/rebuilt");
 
     return BlocBuilder<BibleBooksBloc, BibleBlocState>(
         builder: (context, state) {
@@ -50,36 +52,72 @@ class BooksView extends StatelessWidget {
                   onSelected,
                   options,
                 ) {
-                  return Align(
-                    alignment: Alignment.topLeft,
-                    widthFactor: .9,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.sizeOf(context).shortestSide - 20,
-                        maxHeight: 200,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color
-                          borderRadius:
-                              BorderRadius.circular(8), // Apply border radius
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey
-                                  .withOpacity(0.3), // Add a box shadow
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
+                  return BlocProvider<BibleBooksBloc>.value(
+                    value:  BlocProvider.of<BibleBooksBloc>(context),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      widthFactor: .9,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.sizeOf(context).shortestSide,
+                          maxHeight: 300,
                         ),
-                        child: ListView.builder(
-                            itemBuilder: (c, index) {
-                              return CustomText(
-                                title: options.toList()[index],
-                              );
-                            },
-                            itemCount: options.length),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .scaffoldBackgroundColor, // Set the background color
+                              borderRadius:
+                                  BorderRadius.circular(8), // Apply border radius
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey
+                                      .withOpacity(0.3), // Add a box shadow
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+
+                              const  ToggleSearchButton(),
+
+                                Expanded(
+                                  child: CustomScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    slivers: [
+
+                                   state.verse ?   SliverList(
+                                          delegate:
+                                              SliverChildBuilderDelegate((c, index) {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(5.0),
+                                          child:  BookSearchResultWidget(),
+                                        );
+                                      }, childCount: 5)) :
+
+                                      SliverList(
+                                          delegate:
+                                              SliverChildBuilderDelegate((c, index) {
+                                        return const Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: BookSubWidget(),
+                                        );
+                                      }, childCount: 5)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -238,3 +276,6 @@ class BooksView extends StatelessWidget {
     });
   }
 }
+
+
+

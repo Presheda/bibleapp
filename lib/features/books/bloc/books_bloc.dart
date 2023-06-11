@@ -22,6 +22,7 @@ class BibleBooksBloc extends Bloc<BooksEvents, BibleBlocState> {
         super(BibleBlocState()) {
     on<BooksEventsBookLoading>(_booksLoadingInitiated);
     on<BooksEventsBookSearching>(_booksSearchingInitiated);
+    on<BooksEventsBookSearchingVerseToggled> (_booksSearchingVerseToggled);
 
     startLoading();
   }
@@ -54,4 +55,13 @@ class BibleBooksBloc extends Bloc<BooksEvents, BibleBlocState> {
 
   FutureOr<void> _booksSearchingInitiated(
       BooksEventsBookSearching event, Emitter<BibleBlocState> emit) {}
+
+  FutureOr<void> _booksSearchingVerseToggled(BooksEventsBookSearchingVerseToggled event, Emitter<BibleBlocState> emit) {
+
+    debugPrint("Verse ${event.verse} and chapter ${event.chapter}");
+    emit(state.copyWith(
+      verse: event.verse,
+      chapter: event.chapter
+    ));
+  }
 }
