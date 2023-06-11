@@ -20,7 +20,7 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
   Future<List<BookData>> fetchAllBooks({Map<String, dynamic>? data}) async {
     List<BookData> books;
     String bibleVersion =
-        "de4e12af7f28f599-01 "; // default bible de4e12af7f28f599-01
+        "de4e12af7f28f599-01"; // default bible de4e12af7f28f599-01
     BibleData bibleData = await apiService.getDocumentData(
         endpoint: ApiEndpoint.books(BooksEndpoint.BOOKS, bibleId: bibleVersion),
         requiresAuthToken: false,

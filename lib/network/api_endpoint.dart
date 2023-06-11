@@ -8,7 +8,7 @@ class ApiEndpoint {
   /// Returns the path for an authentication [endpoint].
   static String books(BooksEndpoint endpoint,
       {String? bibleId, String? chapterId}) {
-    const path = '';
+    const path = '/bibles';
     switch (endpoint) {
       case BooksEndpoint.BOOKS:
         return '$path/$bibleId/books';

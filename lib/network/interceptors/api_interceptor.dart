@@ -1,7 +1,10 @@
+import 'package:bibleapp/network/config.dart';
 import 'package:dio/dio.dart';
 
 class ApiInterceptor extends Interceptor {
   static const String requiresAuthTokenKey = "requiresAuthToken";
+
+
 
   ApiInterceptor();
 
@@ -12,9 +15,10 @@ class ApiInterceptor extends Interceptor {
         //TODO precious makesure to add the token later on
         const token = "some_token";
 
+
         options.headers.addAll(
           <String, Object?>{
-            'Authorization': 'Bearer $token',
+            'api-key': token,
           },
         );
       }
