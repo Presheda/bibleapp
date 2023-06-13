@@ -8,7 +8,7 @@ part 'bible_data.g.dart';
 @freezed
 class BibleData with _$BibleData {
   factory BibleData({
-    required List<BookData> books,
+    required List<BookData> data,
 }) =  _BibleData;
 
   factory BibleData.fromJson (JSON json) => _$BibleDataFromJson(json);

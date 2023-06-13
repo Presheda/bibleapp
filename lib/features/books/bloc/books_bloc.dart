@@ -43,6 +43,9 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
           booksList: books,
           bibleState: BibleState.bookLoad));
     } catch (e) {
+
+      debugPrint("returned result is ${e}");
+
       emit(state.copyWith(
         bibleState: BibleState.bookLoad,
         loadStatus: BibleStateLoadStatus.loadFailed,

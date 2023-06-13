@@ -40,11 +40,13 @@ class BooksView extends StatelessWidget {
                 height: 30,
               ),
               Autocomplete<String>(
+
                 fieldViewBuilder: (context, controller, focusNode, onSubmit) {
                   return CustomTextField(
                     controller: controller,
                     hint: "Search books, chapters, verses",
                     focus: focusNode,
+                    enabled: state.booksList.isNotEmpty,
                   );
                 },
                 optionsViewBuilder: (

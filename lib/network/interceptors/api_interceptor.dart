@@ -1,4 +1,5 @@
 import 'package:bibleapp/network/config.dart';
+import 'package:bibleapp/storage/env.dart';
 import 'package:dio/dio.dart';
 
 class ApiInterceptor extends Interceptor {
@@ -12,8 +13,9 @@ class ApiInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (options.extra.containsKey(requiresAuthTokenKey)) {
       if (options.extra[requiresAuthTokenKey] == true) {
-        //TODO precious makesure to add the token later on
-        const token = "some_token";
+        //TODO if the app consumes multiple apis, then there write logic to check base
+        //TODO URL and add appropriate header key
+        final token = Env.BIBLE_API_KEY;
 
 
         options.headers.addAll(

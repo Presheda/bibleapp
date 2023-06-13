@@ -2,6 +2,7 @@ import 'package:bibleapp/features/books/model/export_model.dart';
 import 'package:bibleapp/network/api_endpoint.dart';
 import 'package:bibleapp/network/api_service.dart';
 import 'package:bibleapp/network/api_service_impl.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'books_repository_interface.dart';
 
@@ -18,14 +19,19 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
 
   @override
   Future<List<BookData>> fetchAllBooks({Map<String, dynamic>? data}) async {
-    List<BookData> books;
     String bibleVersion =
         "de4e12af7f28f599-01"; // default bible de4e12af7f28f599-01
     BibleData bibleData = await apiService.getDocumentData(
         endpoint: ApiEndpoint.books(BooksEndpoint.BOOKS, bibleId: bibleVersion),
-        requiresAuthToken: false,
+        requiresAuthToken: true,
+        queryParams: {
+          "include-chapters": true,
+        },
         converter: BibleData.fromJson);
-    return bibleData.books;
+
+    debugPrint("returned result is ${bibleData.data.length}");
+
+    return bibleData.data;
   }
 
   @override
