@@ -1,5 +1,7 @@
 import 'dart:async';
-
+import 'package:bibleapp/features/books/model/verse.dart';
+import 'package:bibleapp/features/books/model/verse_search_response.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:bibleapp/features/books/bloc/books_event.dart';
 import 'package:bibleapp/features/books/model/book_data.dart';
 import 'package:bibleapp/features/books/repository/books_repository_impl.dart';
@@ -20,11 +22,18 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
   BookDataBloc({BooksRepositoryInterface? booksRepositoryImpl})
       : booksRepository = booksRepositoryImpl ?? BooksRepositoryImpl(),
         super(BibleBlocState()) {
-    on<BooksEventsBookLoading>(_booksLoadingInitiated);
-    on<BooksEventsBookSearching>(_booksSearchingInitiated);
-    on<BooksEventsBookSearchingVerseToggled> (_booksSearchingVerseToggled);
+    on<BooksEventsBookLoading>(
+      _booksLoadingInitiated,
+    );
+    on<BooksEventsBookSearching>(_booksSearchingInitiated,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<BooksEventsBookSearchingVerseToggled>(_booksSearchingVerseToggled);
 
     startLoading();
+  }
+
+  EventTransformer<T> debounce<T>(Duration duration) {
+    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
   }
 
   FutureOr<void> _booksLoadingInitiated(
@@ -38,12 +47,11 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
 
       emit(state.copyWith(
           oldTestament: [],
-          newTestament:[],
+          newTestament: [],
           loadStatus: BibleStateLoadStatus.loadSuccess,
           booksList: books,
           bibleState: BibleState.bookLoad));
     } catch (e) {
-
       debugPrint("returned result is ${e}");
 
       emit(state.copyWith(
@@ -58,14 +66,35 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
   }
 
   FutureOr<void> _booksSearchingInitiated(
-      BooksEventsBookSearching event, Emitter<BibleBlocState> emit) {}
+      BooksEventsBookSearching event, Emitter<BibleBlocState> emit) async {
+    if (event.text.trim().isEmpty) {
+      debugPrint("hey it's empty");
+      return;
+    }
 
-  FutureOr<void> _booksSearchingVerseToggled(BooksEventsBookSearchingVerseToggled event, Emitter<BibleBlocState> emit) {
+    try {
+      VerseSearchResponse searchResult = await booksRepository.searchVerse(
+        query: event.text.trim(),
+      );
 
+      emit(state.copyWith(
+          bibleState: BibleState.search,
+          loadStatus: BibleStateLoadStatus.loadSuccess,
+          verseSearchResult: searchResult.data.verses));
+    } catch (_) {
+      emit(state.copyWith(
+        bibleState: BibleState.search,
+        loadStatus: BibleStateLoadStatus.loadFailed,
+      ));
+    }
+
+    debugPrint("Search is called, ${event.text}");
+  }
+
+  FutureOr<void> _booksSearchingVerseToggled(
+      BooksEventsBookSearchingVerseToggled event,
+      Emitter<BibleBlocState> emit) {
     debugPrint("Verse ${event.verse} and chapter ${event.chapter}");
-    emit(state.copyWith(
-      verse: event.verse,
-      chapter: event.chapter
-    ));
+    emit(state.copyWith(verse: event.verse, chapter: event.chapter));
   }
 }

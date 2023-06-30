@@ -1,4 +1,5 @@
 import 'package:bibleapp/features/books/model/export_model.dart';
+import 'package:bibleapp/features/books/model/verse_search_response.dart';
 import 'package:bibleapp/network/api_endpoint.dart';
 import 'package:bibleapp/network/api_service.dart';
 import 'package:bibleapp/network/api_service_impl.dart';
@@ -37,7 +38,7 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
   @override
   Future<BookData> fetchBookDetail({Map<String, dynamic>? data}) async {
     String bibleVersion =
-        "de4e12af7f28f599-01 "; // default bible de4e12af7f28f599-01
+        "de4e12af7f28f599-01"; // default bible de4e12af7f28f599-01
     BookData books;
 
     books = await apiService.getDocumentData(
@@ -45,5 +46,19 @@ class BooksRepositoryImpl extends BooksRepositoryInterface {
         requiresAuthToken: false,
         converter: BookData.fromJson);
     return books;
+  }
+
+  @override
+  Future<VerseSearchResponse> searchVerse({required String query}) async {
+    String bibleVersion =
+        "de4e12af7f28f599-01"; // default bible de4e12af7f28f599-01
+    VerseSearchResponse response = await apiService.getDocumentData(
+        endpoint: ApiEndpoint.books(BooksEndpoint.SEARCH, bibleId: bibleVersion, query: query),
+     //   queryParams: {"query": query, 'sort': 'relevance'},
+        converter: VerseSearchResponse.fromJson);
+
+  //  debugPrint("Debug print ${response} ");
+
+    return response;
   }
 }

@@ -7,6 +7,8 @@ import 'package:bibleapp/helpers/typedefs.dart';
 abstract class BooksRepositoryInterface {
   Future<List<BookData>> fetchAllBooks({JSON? data});
   Future<BookData> fetchBookDetail({Map<String, dynamic>? data});
+
+  Future<dynamic> searchVerse({required String query});
 }
 
 

@@ -7,13 +7,16 @@ class ApiEndpoint {
 
   /// Returns the path for an authentication [endpoint].
   static String books(BooksEndpoint endpoint,
-      {String? bibleId, String? chapterId}) {
+      {String? bibleId, String? chapterId, String? query}) {
     const path = '/bibles';
     switch (endpoint) {
       case BooksEndpoint.BOOKS:
         return '$path/$bibleId/books';
       case BooksEndpoint.SINGLE_BOOK:
         return '$path/$bibleId/books/${chapterId!.toUpperCase()}/chapters';
+
+      case BooksEndpoint.SEARCH:
+        return '$path/$bibleId/search?query=$query&sort=relevance';
     }
   }
 }
@@ -22,4 +25,6 @@ class ApiEndpoint {
 enum BooksEndpoint {
   BOOKS,
   SINGLE_BOOK,
+  SEARCH
+  ,
 }

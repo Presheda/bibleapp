@@ -126,8 +126,10 @@ class LoggingInterceptor extends Interceptor {
     final httpMethod = dioError.requestOptions.method.toUpperCase();
     final url = dioError.requestOptions.baseUrl + dioError.requestOptions.path;
 
+
     debugPrint('\tMETHOD: $httpMethod'); // GET
     debugPrint('\tURL: $url'); // URL
+    debugPrint('\tmessage: ${dioError.response}'); // URL
     if (dioError.response != null) {
       debugPrint('\tStatus code: ${dioError.response!.statusCode}');
       if (dioError.response!.data != null) {

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bibleapp/app/constants/export_app_constants.dart';
 import 'package:bibleapp/features/books/bloc/bible_book_state.dart';
+import 'package:bibleapp/features/books/bloc/books_event.dart';
 import 'package:bibleapp/features/books/widget/bible_book_widget.dart';
 import 'package:bibleapp/features/books/widget/book_sub_widget.dart';
 import 'package:bibleapp/features/books/widget/books_search_result.dart';
@@ -16,13 +17,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
 
 class BooksView extends StatelessWidget {
-  const BooksView({Key? key}) : super(key: key);
+  BooksView({Key? key}) : super(key: key);
+
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocBuilder<BookDataBloc, BibleBlocState>(
-        builder: (context, state) {
+    return BlocBuilder<BookDataBloc, BibleBlocState>(builder: (context, state) {
       return CustomScrollView(
         slivers: [
           GeneralAppBar(
@@ -40,13 +41,17 @@ class BooksView extends StatelessWidget {
                 height: 30,
               ),
               Autocomplete<String>(
-
                 fieldViewBuilder: (context, controller, focusNode, onSubmit) {
                   return CustomTextField(
                     controller: controller,
                     hint: "Search books, chapters, verses",
                     focus: focusNode,
                     enabled: state.booksList.isNotEmpty,
+                    onChanged: (text) {
+                      context
+                          .read<BookDataBloc>()
+                          .add(BooksEventsBookSearching(text: text.trim()));
+                    },
                   );
                 },
                 optionsViewBuilder: (
@@ -55,7 +60,7 @@ class BooksView extends StatelessWidget {
                   options,
                 ) {
                   return BlocProvider<BookDataBloc>.value(
-                    value:  BlocProvider.of<BookDataBloc>(context),
+                    value: BlocProvider.of<BookDataBloc>(context),
                     child: Align(
                       alignment: Alignment.topLeft,
                       widthFactor: .9,
@@ -72,8 +77,8 @@ class BooksView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Theme.of(context)
                                   .scaffoldBackgroundColor, // Set the background color
-                              borderRadius:
-                                  BorderRadius.circular(8), // Apply border radius
+                              borderRadius: BorderRadius.circular(
+                                  8), // Apply border radius
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey
@@ -87,35 +92,43 @@ class BooksView extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
-
-                              const  ToggleSearchButton(),
-
-                                Expanded(
-                                  child: CustomScrollView(
-                                    physics: const BouncingScrollPhysics(),
-                                    slivers: [
-
-                                   state.verse ?   SliverList(
-                                          delegate:
-                                              SliverChildBuilderDelegate((c, index) {
-                                        return const Padding(
-                                          padding: EdgeInsets.all(5.0),
-                                          child:  BookSearchResultWidget(),
-                                        );
-                                      }, childCount: 5)) :
-
-                                      SliverList(
-                                          delegate:
-                                              SliverChildBuilderDelegate((c, index) {
-                                        return const Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: BookSubWidget(),
-                                        );
-                                      }, childCount: 5)),
-                                    ],
-                                  ),
-                                ),
+                                const ToggleSearchButton(),
+                                BlocBuilder<BookDataBloc, BibleBlocState>(
+                                    builder: (context, state) {
+                                  return Expanded(
+                                    child: CustomScrollView(
+                                      physics: const BouncingScrollPhysics(),
+                                      slivers: [
+                                        state.verse
+                                            ? SliverList(
+                                                delegate:
+                                                    SliverChildBuilderDelegate(
+                                                        (c, index) {
+                                                return Padding(
+                                                  padding: EdgeInsets.all(5.0),
+                                                  child: BookSearchResultWidget(
+                                                      verseSearchResult: state
+                                                              .verseSearchResult[
+                                                          index]),
+                                                );
+                                              },
+                                                        childCount: state
+                                                            .verseSearchResult
+                                                            .length))
+                                            : SliverList(
+                                                delegate:
+                                                    SliverChildBuilderDelegate(
+                                                        (c, index) {
+                                                return const Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: BookSubWidget(),
+                                                );
+                                              }, childCount: 5)),
+                                      ],
+                                    ),
+                                  );
+                                }),
                               ],
                             ),
                           ),
@@ -152,8 +165,7 @@ class BooksView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     sliver: SliverGrid(
                         delegate: SliverChildBuilderDelegate((c, index) {
-                          return BibleBookWidget(
-                              books: state.booksList[index]);
+                          return BibleBookWidget(books: state.booksList[index]);
                         }, childCount: state.booksList.length),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -226,8 +238,7 @@ class BooksView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     sliver: SliverGrid(
                         delegate: SliverChildBuilderDelegate((c, index) {
-                          return BibleBookWidget(
-                              books: state.booksList[index]);
+                          return BibleBookWidget(books: state.booksList[index]);
                         }, childCount: state.booksList.length),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -278,6 +289,3 @@ class BooksView extends StatelessWidget {
     });
   }
 }
-
-
-

@@ -1,9 +1,13 @@
+import 'package:bibleapp/features/books/model/verse_search_result.dart';
 import 'package:bibleapp/widgets/widget_export.dart';
 import 'package:flutter/material.dart';
 
 class BookSearchResultWidget extends StatelessWidget {
+
+  final VerseSearchResult verseSearchResult;
   const BookSearchResultWidget({
     super.key,
+    required this.verseSearchResult,
   });
 
   @override
@@ -24,7 +28,7 @@ class BookSearchResultWidget extends StatelessWidget {
         children: [
           CustomText(
             title:
-            "For God so loved the world that ehe gave his only begotten son that whosoever believe in him shall not perish but have everlasting life",
+            verseSearchResult.text,
             fontSize: 13,
             fontWeight: FontWeight.w500,
             maxLine: 2,
@@ -36,7 +40,7 @@ class BookSearchResultWidget extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
 
-            child: CustomText(title: "Luk 12 : 3",
+            child: CustomText(title: verseSearchResult.id,
               //   color: Theme.of(context).colorScheme.secondary,
               fontSize: 12,
               fontWeight: FontWeight.w800,

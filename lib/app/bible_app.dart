@@ -1,5 +1,6 @@
 import 'package:bibleapp/app/app_export.dart';
 import 'package:bibleapp/themes/theme_light.dart';
+import 'package:bibleapp/widgets/widget_export.dart';
 import 'package:flutter/material.dart';
 
 class BibleApp extends StatefulWidget {
@@ -20,11 +21,13 @@ class _BibleAppState extends State<BibleApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: appRoute.onGenerateRoute,
-      initialRoute: AppRouteNames.initialRoute,
-      debugShowCheckedModeBanner: false,
-      theme: BibleLightTheme.appLightTheme(),
+    return DismissKeyboard(
+      child: MaterialApp(
+        onGenerateRoute: appRoute.onGenerateRoute,
+        initialRoute: AppRouteNames.initialRoute,
+        debugShowCheckedModeBanner: false,
+        theme: BibleLightTheme.appLightTheme(),
+      ),
     );
   }
 }

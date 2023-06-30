@@ -1,5 +1,5 @@
-
 import 'package:bibleapp/features/books/model/export_model.dart';
+import 'package:bibleapp/features/books/model/verse_search_result.dart';
 import 'package:equatable/equatable.dart';
 
 /// currently there are only two states we want to listen to for our bible state
@@ -34,25 +34,30 @@ class BibleBlocState extends Equatable {
   final bool verse;
   final bool chapter;
 
+  final List<VerseSearchResult> verseSearchResult;
+
   BibleBlocState(
       {BibleState? bibleState,
       BibleStateLoadStatus? loadStatus,
       List<BookData>? booksList,
       List<BookData>? oldTestament,
       List<BookData>? newTestament,
+      List<VerseSearchResult>? verseSearchResult,
       this.verse = true,
       this.chapter = false})
       : bibleState = bibleState ?? BibleState.bookLoad,
         loadStatus = loadStatus ?? BibleStateLoadStatus.loadingStarted,
         booksList = booksList ?? [],
         oldTestament = oldTestament ?? [],
-        newTestament = newTestament ?? [];
+        newTestament = newTestament ?? [],
+        verseSearchResult = verseSearchResult ?? [];
 
   const BibleBlocState.loadSuccess(
       {required this.bibleState,
       required this.booksList,
       required this.oldTestament,
       required this.newTestament,
+        required this.verseSearchResult,
       this.verse = true,
       this.chapter = false})
       : loadStatus = BibleStateLoadStatus.loadSuccess;
@@ -62,6 +67,7 @@ class BibleBlocState extends Equatable {
       required this.booksList,
       required this.oldTestament,
       required this.newTestament,
+        required this.verseSearchResult,
       this.verse = true,
       this.chapter = false})
       : loadStatus = BibleStateLoadStatus.loadFailed;
@@ -71,6 +77,7 @@ class BibleBlocState extends Equatable {
       required this.booksList,
       required this.oldTestament,
       required this.newTestament,
+        required this.verseSearchResult,
       this.verse = true,
       this.chapter = false})
       : loadStatus = BibleStateLoadStatus.loadingStarted;
@@ -81,6 +88,7 @@ class BibleBlocState extends Equatable {
       List<BookData>? booksList,
       List<BookData>? oldTestament,
       List<BookData>? newTestament,
+        List<VerseSearchResult>? verseSearchResult,
       bool? verse,
       bool? chapter}) {
     return BibleBlocState(
@@ -89,10 +97,18 @@ class BibleBlocState extends Equatable {
         booksList: booksList ?? this.booksList,
         oldTestament: oldTestament ?? this.oldTestament,
         newTestament: newTestament ?? this.newTestament,
+        verseSearchResult: verseSearchResult ?? this.verseSearchResult,
         verse: verse ?? this.verse,
         chapter: chapter ?? this.chapter);
   }
 
-  List<Object?> get props =>
-      [bibleState, loadStatus, booksList, oldTestament, newTestament, verse, chapter];
+  List<Object?> get props => [
+        bibleState,
+        loadStatus,
+        booksList,
+        oldTestament,
+        newTestament,
+        verse,
+         verseSearchResult
+      ];
 }

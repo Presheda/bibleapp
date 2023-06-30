@@ -98,7 +98,7 @@ class _DashboardViewState extends State<DashboardView> {
               const HomeView(),
               BlocProvider<BookDataBloc>(
                 create: (context) => BookDataBloc(),
-                child: const BooksView(),
+                child:  BooksView(),
               ),
               Container(
                 color: Colors.green,

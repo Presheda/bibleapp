@@ -42,6 +42,9 @@ class DioService {
     CacheOptions? cacheOptions,
     CancelToken? cancelToken,
   }) async {
+
+    debugPrint("query is ${queryParams}");
+
     final response = await _dio.get<dynamic>(endpoint,
         queryParameters: queryParams,
         options: _mergeDioAndCacheOptions(
