@@ -26,7 +26,7 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
       _booksLoadingInitiated,
     );
     on<BooksEventsBookSearching>(_booksSearchingInitiated,
-        transformer: debounce(const Duration(milliseconds: 300)));
+        transformer: debounce(const Duration(milliseconds: 200)));
     on<BooksEventsBookSearchingVerseToggled>(_booksSearchingVerseToggled);
 
     startLoading();
@@ -42,8 +42,7 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
     try {
       books = await booksRepository.fetchAllBooks();
 
-      // oldTestament.addAll(books.where((element) => element.testament == "VT"));
-      // newTestament.addAll(books.where((element) => element.testament == "NT"));
+      debugPrint("Book loaad is called");
 
       emit(state.copyWith(
           oldTestament: [],
@@ -95,6 +94,8 @@ class BookDataBloc extends Bloc<BooksEvents, BibleBlocState> {
       BooksEventsBookSearchingVerseToggled event,
       Emitter<BibleBlocState> emit) {
     debugPrint("Verse ${event.verse} and chapter ${event.chapter}");
-    emit(state.copyWith(verse: event.verse, chapter: event.chapter));
+    emit(state.copyWith(verse: event.verse, chapter: event.chapter, bibleState: BibleState.search));
   }
+
+
 }

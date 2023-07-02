@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bibleapp/app/constants/export_app_constants.dart';
 import 'package:bibleapp/features/books/bloc/bible_book_state.dart';
 import 'package:bibleapp/features/books/bloc/books_event.dart';
+import 'package:bibleapp/features/books/model/verse_search_result.dart';
 import 'package:bibleapp/features/books/widget/bible_book_widget.dart';
 import 'package:bibleapp/features/books/widget/book_sub_widget.dart';
 import 'package:bibleapp/features/books/widget/books_search_result.dart';
@@ -40,7 +41,7 @@ class BooksView extends StatelessWidget {
               const AppSpacing(
                 height: 30,
               ),
-              Autocomplete<String>(
+              Autocomplete<VerseSearchResult>(
                 fieldViewBuilder: (context, controller, focusNode, onSubmit) {
                   return CustomTextField(
                     controller: controller,
@@ -107,13 +108,12 @@ class BooksView extends StatelessWidget {
                                                 return Padding(
                                                   padding: EdgeInsets.all(5.0),
                                                   child: BookSearchResultWidget(
-                                                      verseSearchResult: state
-                                                              .verseSearchResult[
-                                                          index]),
+                                                      verseSearchResult: options
+                                                          .toList()[index]),
                                                 );
                                               },
-                                                        childCount: state
-                                                            .verseSearchResult
+                                                        childCount: options
+                                                            .toList()
                                                             .length))
                                             : SliverList(
                                                 delegate:
@@ -138,9 +138,13 @@ class BooksView extends StatelessWidget {
                   );
                 },
                 optionsBuilder: (e) {
-                  return <String>["People", "Others", "Names", "Edafe"]
-                      .where((element) => element.contains(e.text))
-                      .toList();
+                  /// There's not much to filter here, the Api already filter the search query according to the relevance,
+                  /// so we just display whatever the api returns
+                  return state.verseSearchResult;
+
+                  // return <String>["People", "Others", "Names", "Edafe"]
+                  //     .where((element) => element.contains(e.text))
+                  //     .toList();
                 },
               ),
               const AppSpacing(
@@ -160,6 +164,8 @@ class BooksView extends StatelessWidget {
               buildWhen: (state, current) =>
                   current.bibleState == BibleState.bookLoad,
               builder: (context, state) {
+
+                debugPrint("Rebuild is being called for books ${state.bibleState}");
                 if (state.loadStatus == BibleStateLoadStatus.loadSuccess) {
                   return SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -212,78 +218,78 @@ class BooksView extends StatelessWidget {
                   ),
                 );
               }),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverList(
-                delegate: SliverChildListDelegate(([
-              const AppSpacing(
-                height: 30,
-              ),
-              CustomText(
-                title: "Old Testament",
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-              const AppSpacing(
-                height: 10,
-              ),
-            ]))),
-          ),
-          BlocBuilder<BookDataBloc, BibleBlocState>(
-              buildWhen: (state, current) =>
-                  current.bibleState == BibleState.bookLoad,
-              builder: (context, state) {
-                if (state.loadStatus == BibleStateLoadStatus.loadSuccess) {
-                  return SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    sliver: SliverGrid(
-                        delegate: SliverChildBuilderDelegate((c, index) {
-                          return BibleBookWidget(books: state.booksList[index]);
-                        }, childCount: state.booksList.length),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                mainAxisSpacing: 10,
-                                mainAxisExtent: 70,
-                                crossAxisSpacing: 10)),
-                  );
-                }
-                if (state.loadStatus == BibleStateLoadStatus.loadFailed) {
-                  return SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate(([
-                        const AppSpacing(
-                          height: 10,
-                        ),
-                        CustomText(
-                          title: "Load Failed",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        )
-                      ])),
-                    ),
-                  );
-                }
-
-                /// we just want to return loading progress
-                return SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate(([
-                      const AppSpacing(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: CircularProgressIndicator()))
-                    ])),
-                  ),
-                );
-              }),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   sliver: SliverList(
+          //       delegate: SliverChildListDelegate(([
+          //     const AppSpacing(
+          //       height: 30,
+          //     ),
+          //     CustomText(
+          //       title: "Old Testament",
+          //       fontSize: 16,
+          //       fontWeight: FontWeight.w600,
+          //     ),
+          //     const AppSpacing(
+          //       height: 10,
+          //     ),
+          //   ]))),
+          // ),
+          // BlocBuilder<BookDataBloc, BibleBlocState>(
+          //     buildWhen: (state, current) =>
+          //         current.bibleState == BibleState.bookLoad,
+          //     builder: (context, state) {
+          //       if (state.loadStatus == BibleStateLoadStatus.loadSuccess) {
+          //         return SliverPadding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 20),
+          //           sliver: SliverGrid(
+          //               delegate: SliverChildBuilderDelegate((c, index) {
+          //                 return BibleBookWidget(books: state.booksList[index]);
+          //               }, childCount: state.booksList.length),
+          //               gridDelegate:
+          //                   const SliverGridDelegateWithFixedCrossAxisCount(
+          //                       crossAxisCount: 3,
+          //                       mainAxisSpacing: 10,
+          //                       mainAxisExtent: 70,
+          //                       crossAxisSpacing: 10)),
+          //         );
+          //       }
+          //       if (state.loadStatus == BibleStateLoadStatus.loadFailed) {
+          //         return SliverPadding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 20),
+          //           sliver: SliverList(
+          //             delegate: SliverChildListDelegate(([
+          //               const AppSpacing(
+          //                 height: 10,
+          //               ),
+          //               CustomText(
+          //                 title: "Load Failed",
+          //                 fontSize: 14,
+          //                 fontWeight: FontWeight.w400,
+          //               )
+          //             ])),
+          //           ),
+          //         );
+          //       }
+          //
+          //       /// we just want to return loading progress
+          //       return SliverPadding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 20),
+          //         sliver: SliverList(
+          //           delegate: SliverChildListDelegate(([
+          //             const AppSpacing(
+          //               height: 10,
+          //             ),
+          //             const SizedBox(
+          //                 height: 50,
+          //                 width: 50,
+          //                 child: Align(
+          //                     alignment: Alignment.center,
+          //                     child: CircularProgressIndicator()))
+          //           ])),
+          //         ),
+          //       );
+          //     }),
         ],
       );
     });
